@@ -1,0 +1,221 @@
+
+
+
+<!-- 
+
+<h1 class="text-center"> PaSScheCKER </h1> 
+
+<body>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    
+
+
+    <form method="POST" class="mt-5 text-center">{% csrf_token %}
+        <labe for= "pass1"l> Password </label>
+            <input type="password" name="pass1" id="pass1" value="Password you want to check">
+            <br><br>
+            <div class="g-recaptcha" data-sitekey="6LeH2qEaAAAAAO5Wn4-cYnE1l1t-DyhL7FJH4KtQ"></div>
+                {% if messages %}
+                {% for message in messages %}
+                <div class="text-center mt-5 text-info" > {{message}}</div>
+                {%endfor%}
+                {%endif%}
+                <button class="btn btn-primary">Check</button> 
+    </form>
+    
+    
+
+</body> -->
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h3 ,hr{
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 16px;
+  margin: 5px;
+}
+
+.tabs{
+    width: 900px;
+    display: block;
+    margin: 300px auto;
+    position: relative;
+}
+
+.tabs .tab{
+    float: left;
+    display: block;
+}
+
+.tabs .tab>input[type="radio"] {
+    position: absolute;
+    top: -5000px;
+    left: -5000px;
+}
+
+.tabs .tab>label {
+    display: block;
+    padding: 10px 60px;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    color: #FFF;
+    background: #4A83FD;
+}
+
+.tabs .content {
+    /*z-index: 0;/* or display: none; */
+    z-index: 0;
+    display: none;
+    overflow: hidden;
+    width: 1200px;
+    padding: 25px;
+    position: absolute;
+    top: 27px;
+    left: 0;
+    background: #303030;
+    color: #DFDFDF;
+    
+    opacity:0;
+    transition: opacity 400ms ease-out;
+}
+
+.tabs>.tab>[id^="tab"]:checked + label {
+    top: 0;
+    background: #303030;
+    color: #F5F5F5;
+}
+
+.tabs>.tab>[id^="tab"]:checked ~ [id^="tab-content"] {
+    /*z-index: 1;/* or display: block; */
+    display: inline-block;
+   
+   
+    opacity: 1;
+    transition: opacity 400ms ease-out;
+}
+
+#t1:target,
+#tab2:target {
+  display: block;
+}
+</style> 
+
+<body>
+<script type="text/javascrpt" src="jquery-2.0.0.min.js"></script>
+<script type="text/javascrpt" src="main.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+{% load static %}
+
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"> -->
+
+  <ul class="tabs">
+    
+    <li id="t1" data-tab ="tab1" class="tab">
+        <input type="radio" name="tabs" id="tab1" class ='t' value="tb1" />
+        <label for="tab1">Password Strenght Checker </label>
+        <div id="tab-content" class="content">
+            <h1>Enter the password you want to check</h1>
+            <hr/>
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+            <form name = "form1" method="POST" class="mt-5 text-center"  >{% csrf_token %}
+                <labe for= "pass1"l> Password </label>
+                    <input type="password" name="pass1" id="pass1" value="Password you want to check">
+                    <br><br>
+                    <div class="g-recaptcha" data-sitekey="6LeH2qEaAAAAAO5Wn4-cYnE1l1t-DyhL7FJH4KtQ"></div>
+
+                        <div class="text-center mt-5 text-info" > {{passlvl}}</div>
+                        <br><br>
+                        <div class="text-center mt-5 text-info" > {{powned}}</div>
+
+                        <button name = "form1" class="btn btn-primary">Check</button> 
+            </form>
+
+        </div>
+    </li>
+    
+    <li id = "t2" data-tab="tab2" class="tab"  >
+      <input type="radio" name="tabs" class ='t'  id="tab2" value="tb2" />
+      <label for="tab2">Password Generator</label>   
+      <div id="tab-content" class="content">
+
+
+
+            <form name = "form2" method="POST" class="mt-5 text-center" id="tb2" >{% csrf_token %}
+                <labe > Generate your New Password </label>
+                
+                    <br><br>
+                    <div class="g-recaptcha" data-sitekey="6LeH2qEaAAAAAO5Wn4-cYnE1l1t-DyhL7FJH4KtQ"></div>
+                        <div class="text-center mt-5 text-info" > {{genp}}</div>
+
+                        <button name = "form2"  class="btn btn-primary">generate </button> 
+            </form> 
+       </div>
+    </li>
+
+     <li id = "t3" class="tab">
+      <input type="radio" name="tabs" id="tab3" class ='t' value="tb3" />
+      <label for="tab3">Contact Info</label>   
+      <div id="tab-content" class="content">
+          <h1>El Moulinix Contact </h1>
+          <hr/>
+          <h3>Elmoulinix@yahoo.com</h3>
+          <br/>
+          
+      </div>
+    </li>
+
+
+    
+  </ul>
+
+<script type="text/javascript">
+
+
+reload();
+//alert('sddssd')
+
+//add click functionality to radio buttons
+Array.from(document.querySelectorAll('input[type="radio"]')).forEach(function(item, index) {
+  item.addEventListener('click', save);
+});
+
+//Save Values
+function save() {
+  //Radiobuttons  
+  var g1 = document.querySelector('input[name=tabs]:checked');
+  g1 = (g1) ? g1.value : '';
+  localStorage.setItem("g1", g1);
+}
+//Restoring saved Values
+function reload() {
+  // Radiobuttons    
+  // get a list of DOM elements
+  var G1 = Array.from(document.getElementsByName('tabs'));
+  var val1 = localStorage.getItem('g1');
+  for (var i = 0; i < G1.length; i++) {
+    if (G1[i].value == val1) {
+      G1[i].checked = true;
+    }
+  }
+}
+
+
+    
+
+  
+
+
+</script>
+  </body> 
